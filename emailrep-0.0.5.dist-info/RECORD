@@ -1,0 +1,15 @@
+../../Scripts/emailrep.exe,sha256=fw5w3gPAoYrCb_uYocwlrm8lC_iRR6fkTU5OH1Z_Jr4,108435
+emailrep-0.0.5.dist-info/INSTALLER,sha256=zuuue4knoyJ-UwPPXg8fezS7VCrXJQrAP7zeNuwvFQg,4
+emailrep-0.0.5.dist-info/LICENSE,sha256=lj8HqP4iQ1iImIOQMZorPJNpuMwn7q0Ym5xnnr0khVY,1056
+emailrep-0.0.5.dist-info/METADATA,sha256=WLXAGzjEiQRbr-1qc4eS_01TCs7VQEDxO8j0_9RDMd8,1639
+emailrep-0.0.5.dist-info/RECORD,,
+emailrep-0.0.5.dist-info/REQUESTED,sha256=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU,0
+emailrep-0.0.5.dist-info/WHEEL,sha256=S6zePDbUAjzMmpYOg2cHDxuYFWw7WiOXt6ogM6hIB5Q,92
+emailrep-0.0.5.dist-info/entry_points.txt,sha256=TEa0G7o0DXwtZ_qcMh7TNS41YBVv2bkCtgz2sSBU9Tk,48
+emailrep-0.0.5.dist-info/top_level.txt,sha256=l21nJ38xqwvTPMEyvK5LkOV_6HkKIXziAMzypMFEUiU,9
+emailrep/__init__.py,sha256=szG_vtOX0G_X-v4PnXVhE2KjbeGv9MQqpx-6_YWo0YQ,1686
+emailrep/__pycache__/__init__.cpython-312.pyc,,
+emailrep/__pycache__/cli.cpython-312.pyc,,
+emailrep/__pycache__/utils.cpython-312.pyc,,
+emailrep/cli.py,sha256=TQyKENOqVyB671wQFd2egbPh2JgQXsdYt8X54dyryMs,1466
+emailrep/utils.py,sha256=d65lCCUA4FonP8j-hXZLuZvhR0A2jqsZKsCnxrbTYhE,3426

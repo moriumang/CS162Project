@@ -1,0 +1,3 @@
+[console_scripts]
+emailrep = emailrep.cli:main
+
