@@ -1,0 +1,183 @@
+{% extends "home.html" %}
+{% load static %}
+
+{% block title %}About Us | {% endblock title %}
+
+{% block cssfilelink %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #333;
+    }
+
+    .about-card {
+        max-width: 800px; /* Adjusted max-width */
+        margin: 20px auto;
+        padding: 40px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .about-card h2 {
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-weight: 700; /* Use bold weight */
+        font-size: 2em;
+        margin-bottom: 1rem;
+    }
+
+    .about-card p {
+        font-size: 1.1em;
+        line-height: 1.5;
+    }
+
+    .about-card .about-item {
+        margin-bottom: 20px;
+    }
+
+    .about-card .icon {
+        font-size: 2em;
+        margin-right: 15px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .about-card a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .about-card .social-link {
+        display: inline-block;
+        margin-top: 20px;
+    }
+
+    .about-card .social-link a {
+        display: inline-block;
+        margin: 0 10px;
+        font-size: 1.5em;
+    }
+
+    /* Additional card style for Developer */
+    .developer-card {
+        max-width: 800px; /* Adjusted max-width */
+        margin: 40px auto;
+        padding: 40px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .developer-card h2 {
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-weight: 700; /* Use bold weight */
+        font-size: 2em;
+        margin-bottom: 1rem;
+    }
+
+    .developer-card p {
+        font-size: 1.1em;
+        line-height: 1.6; /* Adjusted line height for better readability */
+        text-align: justify; /* Justified text alignment */
+    }
+
+    .developer-card .about-item {
+        margin-bottom: 20px;
+    }
+
+    .developer-card .icon {
+        font-size: 2em;
+        margin-right: 15px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .developer-card a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .developer-card .socials {
+        margin-top: 30px;
+    }
+
+    .developer-card .socials h3 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+
+    .developer-card .socials ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .developer-card .socials ul li {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .developer-card .socials ul li a {
+        color: #007bff;
+        font-size: 1.3em;
+        text-decoration: none;
+    }
+
+    .developer-card .socials ul li img {
+        width: 30px; /* Adjust width as needed */
+        height: auto;
+        vertical-align: middle;
+    }
+</style>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+{% endblock cssfilelink %}
+
+{% block body %} 
+  
+<!-- About Threat Hunter 360 Card -->
+<div class="about-card">
+    <h2>About Threat Hunter 360</h2>
+    <p>We are a team dedicated to providing top-notch cybersecurity solutions. Our mission is to ensure the safety and security of our clients' digital assets.</p>
+    <div class="about-details">
+        <div class="about-item">
+            <div class="icon">🛡️</div>
+            <p>Our Services: Discover, Analyze, and Neutralize threats.</p>
+        </div>
+        <div class="about-item">
+            <div class="icon">🔒</div>
+            <p>Your Security Partner: We prioritize your security needs.</p>
+        </div>
+    </div>
+</div>
+
+<!-- About Developer Card -->
+<div class="developer-card">
+    <h2>About Developer</h2>
+    <p>Hello, I'm Anmolsinh Kachhela, a cybersecurity enthusiast currently serving as a Cybersecurity Intern at GTU-Graduate School of Engineering and Technology. I actively engage in hands-on projects and coursework, refining my skills in securing digital environments. My experience includes conducting cybersecurity assessments, implementing authentication mechanisms, and utilizing diverse security tools and methodologies. I hold certifications from EC-Council, specializing in areas like SQL Injection Attacks and Dark Web & Anonymity, showcasing my proficiency in cybersecurity.</p>
+    <p>Additionally, I am pursuing a Bachelor of Engineering degree in Information Technology at Shantilal Shah Engineering College, slated for graduation in May 2024. I've completed the Google Cybersecurity Professional Certificate and remain deeply committed to staying abreast of emerging trends and technologies in cybersecurity. My competencies span network security, cryptography, ethical hacking, SIEM, SOC, and information assurance, bolstered by strong analytical, problem-solving, and communication skills. I excel in pressure situations and adeptly prioritize tasks, with a keen focus on contributing to data and system protection against cyber threats.</p>
+
+    <!-- Socials Section -->
+    <div class="socials">
+        <h3>Socials</h3>
+        <ul>
+            <li><a href="https://www.linkedin.com/in/anmolsinh-kachhela-b89547278/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn Logo"></a></li>
+            <!-- Add other social media accounts here -->
+            <!-- <li><a href="https://www.facebook.com/yourfacebookprofile" target="_blank">Facebook</a></li> -->
+            <!-- <li><a href="https://www.twitter.com/yourtwitterprofile" target="_blank">Twitter</a></li> -->
+            <!-- <li><a href="https://www.instagram.com/yourinstagramprofile" target="_blank">Instagram</a></li> -->
+            <!-- <li><a href="https://www.github.com/yourgithubprofile" target="_blank">GitHub</a></li> -->
+            <!-- Add more social media accounts as needed -->
+        </ul>
+    </div>
+</div>
+
+{% endblock body %}

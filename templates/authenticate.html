@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Two-Factor Authentication</title>
+    <link rel="stylesheet" href="path_to_your_styles.css">
+</head>
+<body>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        <h3>Two-Factor Authentication</h3>
+
+        <label for="otp">Enter the code from your authenticator app</label>
+        <input type="text" id="otp" name="otp" placeholder="Enter Code" required>
+
+        <button type="submit">Verify</button>
+        <a href="{% url 'two_factor:resend' %}" class="cool-link">Resend code</a>
+    </form>
+</body>
+</html>

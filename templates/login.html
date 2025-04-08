@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Threat Hunter 360</title>
+    <style>
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background-color: #0f172a;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .login-container {
+            background-color: #1e293b;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .login-container h1 {
+            font-size: 24px;
+            color: #e2e8f0;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+        }
+        
+        .login-container .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            text-align: center;
+            border-radius: 4px;
+        }
+        
+        .login-container .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .login-container .message.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .login-container label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #e2e8f0;
+        }
+        
+        /* Ensure both input fields have the same size */
+        .login-container input[type="text"],
+        .password-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #3b82f6;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #e2e8f0;
+            background-color: #1e293b;
+            box-sizing: border-box; /* Ensures padding and borders do not affect the size */
+        }
+        
+        .login-container input[type="text"]:focus,
+        .password-container input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+        
+        /* Password container */
+        .password-container {
+            width: 100%;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        /* Eye icon for password toggle */
+        .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 36%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 20px;
+            color: #e2e8f0;
+        }
+        
+        .eye-icon:hover {
+            color: #2563eb;
+        }
+        
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #2563eb;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .login-container button:hover {
+            background-color: #1d4ed8;
+        }
+        
+        .login-container .signup-link {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #e2e8f0;
+        }
+        
+        .login-container .signup-link a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        
+        .login-container .signup-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <!-- Font Awesome for Eye Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+
+    <div class="login-container">
+        <h1>Login</h1>
+
+        <!-- Display messages (success or error) -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password</label>
+            <div class="password-container">
+                <input type="password" id="password" name="password" required>
+                <span id="toggle-password" class="eye-icon">
+                    <i class="fas fa-eye"></i>
+                </span>
+            </div>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <div class="signup-link">
+            Don't have an account? <a href="{% url 'signup' %}">Sign up</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('toggle-password').addEventListener('click', function () {
+            var passwordField = document.getElementById('password');
+            var icon = this.querySelector('i');
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';  // Show password
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = 'password';  // Hide password
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+    </script>
+
+</body>
+</html>

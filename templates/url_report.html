@@ -1,0 +1,122 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REPORT : URL Reputation Check</title>
+    <link rel="stylesheet" href="{% static 'css/ip_report.css' %}"> 
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>URL Reputation Report for: {{ url_data.virustotal_report.url }}</h1>
+        </div>
+
+        <div class="card">
+            <h2>VIRUSTOTAL REPORT</h2>
+            <table>
+                <tr>
+                    <th>Information</th>
+                    <th>Details</th>
+                </tr>
+                <tr>
+                    <td>URL</td>
+                    <td>{{ url_data.virustotal_report.url }}</td>
+                </tr>
+                <tr>
+                    <td>Total Scan Attempts</td>
+                    <td>{{ url_data.virustotal_report.total_scan_attempts }}</td>
+                </tr>
+                <tr>
+                    <td>Positives</td>
+                    <td>{{ url_data.virustotal_report.positives }}</td>
+                </tr>
+                <tr>
+                    <td>Permalink</td>
+                    <td><a href="{{ url_data.virustotal_report.permalink }}">{{ url_data.virustotal_report.permalink }}</a></td>
+                </tr>
+                <tr>
+                    <td>Scans</td>
+                    <td>
+                        <ul>
+                            {% for scan, result in url_data.virustotal_report.scans.items %}
+                                <li>{{ scan }}: {{ result }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>URLSCAN.IO REPORT</h2>
+            <table>
+                <tr>
+                    <th>Information</th>
+                    <th>Details</th>
+                </tr>
+                <tr>
+                    <td>Message</td>
+                    <td>{{ url_data.urlscan_io_report_message }}</td>
+                </tr>
+                <tr>
+                    <td>Visibility</td>
+                    <td>{{ url_data.urlscan_io_report_visibility }}</td>
+                </tr>
+                <tr>
+                    <td>Unique ID</td>
+                    <td>{{ url_data.urlscan_io_report_uuid }}</td>
+                </tr>
+                {% if url_data.urlscan_io_report_url_scanned %}
+                    <tr>
+                        <td>Scanned URL</td>
+                        <td>{{ url_data.urlscan_io_report_url_scanned }}</td>
+                    </tr>
+                    <tr>
+                        <td>Overall Score</td>
+                        <td>{{ url_data.urlscan_io_report_overall_score }}</td>
+                    </tr>
+                    <tr>
+                        <td>Malicious</td>
+                        <td>{{ url_data.urlscan_io_report_malicious }}</td>
+                    </tr>
+                    <tr>
+                        <td>Screenshot URL</td>
+                        <td><a href="{{ url_data.urlscan_io_report_screenshot_url }}">{{ url_data.urlscan_io_report_screenshot_url }}</a></td>
+                    </tr>
+                    <tr>
+                        <td>URLSCAN Score</td>
+                        <td>{{ url_data.urlscan_io_report_urlscan_score }}</td>
+                    </tr>
+                    {% if url_data.urlscan_io_report_categories %}
+                        <tr>
+                            <td>Categories</td>
+                            <td>
+                                <ul>
+                                    {% for category in url_data.urlscan_io_report_categories %}
+                                        <li>{{ category }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <td>Report Reference</td>
+                        <td><a href="{{ url_data.urlscan_io_report_report_reference }}">{{ url_data.urlscan_io_report_report_reference }}</a></td>
+                    </tr>
+                {% endif %}
+            </table>
+              <div class="button-container">
+            <div class="print-button">
+                <button class="button-63" role="button" onclick="window.print()">Print</button>
+            </div>
+            <div class="back-button">
+                <a class="button-63" href="{% url 'urls' %}">Back</a>
+            </div>
+        </div>
+        </div>
+    </div>
+</body>
+</html>

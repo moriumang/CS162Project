@@ -1,0 +1,101 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REPORT : Hash Reputation Check </title>
+    <link rel="stylesheet" href="{% static 'css/ip_report.css' %}"> 
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Hash Reputation Report for: {{ hash_data.alienvault_otxv2_report.hash }}</h1>
+        </div>
+
+        <div class="card">
+            <h2>AlienVault OTX REPORT</h2>
+            <table>
+                <tr>
+                    <th>Information</th>
+                    <th>Details</th>
+                </tr>
+                <tr>
+                    <td>Hash</td>
+                    <td>{{ hash_data.alienvault_otxv2_report.hash }}</td>
+                </tr>
+                <tr>
+                    <td>File Type</td>
+                    <td>{{ hash_data.alienvault_otxv2_report.file_type }}</td>
+                </tr>
+                <tr>
+                    <td>Cuckoo Score</td>
+                    <td>{{ hash_data.alienvault_otxv2_report.cuckoo_score }}</td>
+                </tr>
+                <tr>
+                    <td>Number of Signatures</td>
+                    <td>{{ hash_data.alienvault_otxv2_report.num_signatures }}</td>
+                </tr>
+                <tr>
+                    <td>MS Defender Results</td>
+                    <td>{{ hash_data.alienvault_otxv2_report.msdefender_results }}</td>
+                </tr>
+                <tr>
+                    <td>Avast AV Results</td>
+                    <td>{{ hash_data.alienvault_otxv2_report.avast_results }}</td>
+                </tr>
+            </table>
+            <div class="reference">
+                <p>Reference: <a href="https://otx.alienvault.com/indicator/file/{{ hash_data.alienvault_otxv2_report.hash }}">https://otx.alienvault.com/indicator/file/{{ hash_data.alienvault_otxv2_report.hash }}</a></p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>VIRUSTOTAL REPORT</h2>
+            <table>
+                <tr>
+                    <th>Information</th>
+                    <th>Details</th>
+                </tr>
+                <tr>
+                    <td>Hash Submitted</td>
+                    <td>{{ hash_data.virustotal_report.hash_submitted }}</td>
+                </tr>
+                <tr>
+                    <td>File Type</td>
+                    <td>{{ hash_data.virustotal_report.file_type }}</td>
+                </tr>
+                <tr>
+                    <td>Total Detection</td>
+                    <td>{{ hash_data.virustotal_report.total_detection }}</td>
+                </tr>
+                <tr>
+                    <td>Number of Reports</td>
+                    <td>{{ hash_data.virustotal_report.num_reports }}</td>
+                </tr>
+                <tr>
+                    <td>Threat Label</td>
+                    <td>{{ hash_data.virustotal_report.threat_label }}</td>
+                </tr>
+                <tr>
+                    <td>File Signature</td>
+                    <td>{{ hash_data.virustotal_report.file_signature }}</td>
+                </tr>
+            </table>
+            <div class="reference">
+                <p>Reference: <a href="{{ hash_data.virustotal_report.virustotal_reference }}">{{ hash_data.virustotal_report.virustotal_reference }}</a></p>
+            </div>
+      
+
+        <div class="button-container">
+            <div class="print-button">
+                <button class="button-63" role="button" onclick="window.print()">Print</button>
+            </div>
+            <div class="back-button">
+                <a class="button-63" href="{% url 'hashes' %}">Back</a>
+            </div>
+       
+    </div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!-- email_verification.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification</title>
+</head>
+<body>
+    <h2>Email Verification</h2>
+    <p>Hi {{ user.username }},</p>
+    <p>Thank you for signing up. Please verify your email address by clicking the link below:</p>
+    <p><a href="{{ verification_link }}">Verify Email</a></p>
+</body>
+</html>

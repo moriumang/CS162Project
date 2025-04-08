@@ -1,0 +1,169 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REPORT : IP Reputation Check </title>
+    <link rel="stylesheet" href="{% static 'css/ip_report.css' %}"> 
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>IP Reputation Report for: {{ ip_data.virustotal_report.ip_address }}</h1>
+        </div>
+
+    <div class="card">
+        <h2>VIRUSTOTAL REPORT</h2>
+        <table>
+            <tr>
+                <th>Information</th>
+                <th>Details</th>
+            </tr>
+            <tr>
+                <td>IP Address</td>
+                <td>{{ ip_data.virustotal_report.ip_address }}</td>
+            </tr>
+            <tr>
+                <td>IP Address Owner</td>
+                <td>{{ ip_data.virustotal_report.owner }}</td>
+            </tr>
+            <tr>
+                <td>Number of scan attempted</td>
+                <td>{{ ip_data.virustotal_report.scan_attempted }}</td>
+            </tr>
+            <tr>
+                <td>Reputation</td>
+                <td>{{ ip_data.virustotal_report.reputation }}</td>
+            </tr>
+            <tr>
+                <td>Number of Reportings</td>
+                <td>{{ ip_data.virustotal_report.num_reports }}</td>
+            </tr>
+        </table>
+        <div class="reference">
+            <p>Reference: <a href="{{ ip_data.virustotal_report.reference }}">{{ ip_data.virustotal_report.reference }}</a></p>
+        </div>
+</div>
+    <div class="card">
+
+        <h2>ABUSEIPDB REPORT</h2>
+        <table>
+            <tr>
+                <th>Information</th>
+                <th>Details</th>
+            </tr>
+            <tr>
+                <td>IP Address</td>
+                <td>{{ ip_data.abuseipdb_report.ip_address }}</td>
+            </tr>
+            <tr>
+                <td>Number of Reports</td>
+                <td>{{ ip_data.abuseipdb_report.num_reports }}</td>
+            </tr>
+            <tr>
+                <td>Abuse Score</td>
+                <td>{{ ip_data.abuseipdb_report.abuse_score }}</td>
+            </tr>
+            <tr>
+                <td>Last Reported on</td>
+                <td>{{ ip_data.abuseipdb_report.last_reported }}</td>
+            </tr>
+        </table>
+        <div class="reference">
+            <p>Reference: <a href="{{ ip_data.abuseipdb_report.reference }}">{{ ip_data.abuseipdb_report.reference }}</a></p>
+        </div>
+    </div>
+
+    <div class="card">
+
+        <h2>AlienVault OTX REPORT</h2>
+        <table>
+            <tr>
+                <th>Information</th>
+                <th>Details</th>
+            </tr>
+            <tr>
+                <td>IP Address</td>
+                <td>{{ ip_data.alienvault_otx_report.ip_address }}</td>
+            </tr>
+            <tr>
+                <td>IP Address Type</td>
+                <td>{{ ip_data.alienvault_otx_report.ip_type }}</td>
+            </tr>
+            <tr>
+                <td>IP Owner/ASN</td>
+                <td>{{ ip_data.alienvault_otx_report.ip_owner }}</td>
+            </tr>
+            <tr>
+                <td>City</td>
+                <td>{{ ip_data.alienvault_otx_report.city }}</td>
+            </tr>
+            <tr>
+                <td>Country</td>
+                <td>{{ ip_data.alienvault_otx_report.country }}</td>
+            </tr>
+            <tr>
+                <td>Tags</td>
+                <td>{{ ip_data.alienvault_otx_report.tags }}</td>
+            </tr>
+        </table>
+        <div class="reference">
+            <p>Reference: <a href="{{ ip_data.alienvault_otx_report.reference }}">{{ ip_data.alienvault_otx_report.reference }}</a></p>
+        </div>
+</div>
+<div class="card">
+
+        <h2>WHOIS RECORD</h2>
+        <table>
+            <tr>
+                <th>Information</th>
+                <th>Details</th>
+            </tr>
+            <tr>
+                <td>CIDR</td>
+                <td>{{ ip_data.whois_record.cidr }}</td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>{{ ip_data.whois_record.name }}</td>
+            </tr>
+            <tr>
+                <td>Range</td>
+                <td>{{ ip_data.whois_record.range }}</td>
+            </tr>
+            <tr>
+                <td>Descr</td>
+                <td>{{ ip_data.whois_record.description }}</td>
+            </tr>
+            <tr>
+                <td>Country</td>
+                <td>{{ ip_data.whois_record.country }}</td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td>{{ ip_data.whois_record.address }}</td>
+            </tr>
+            <tr>
+                <td>Created</td>
+                <td>{{ ip_data.whois_record.created }}</td>
+            </tr>
+            <tr>
+                <td>Updated</td>
+                <td>{{ ip_data.whois_record.updated }}</td>
+            </tr>
+        </table>
+        <div class="button-container">
+            <div class="print-button">
+                <button class="button-63" role="button" onclick="window.print()">Print</button>
+            </div>
+            <div class="back-button">
+                <a class="button-63" href="{% url 'ips' %}">Back</a>
+            </div>
+        </div>
+   
+</body>
+</html>
+</body>
+</html>

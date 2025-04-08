@@ -1,0 +1,149 @@
+/* General styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Header styles */
+.main-header {
+    background-color: #007bff; /* Blue background for header */
+    color: #00ff00 !important; /* Green text color for header */
+    padding: 10px 0;
+    flex-shrink: 0;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header-content .centre a {
+    color: #00ff00 !important;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.header-content ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.header-content ul li {
+    margin-right: 20px;
+    position: relative;
+}
+
+.header-content ul li a {
+    color: #00ff00 !important;
+    text-decoration: none;
+}
+
+.header-content ul li a:hover {
+    text-decoration: none;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #007bff; /* Blue background for dropdown */
+    color: #00ff00 !important; /* Green text color for dropdown */
+    min-width: 200px;
+    padding: 15px 0;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease-in-out;
+    transform-origin: top;
+    border-radius: 5px;
+}
+
+.header-content ul li:hover .dropdown-menu {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: scaleY(1);
+}
+
+.dropdown-menu li {
+    display: block;
+    padding: 10px 20px;
+    list-style-type: disc;
+    border-radius: 5px;
+    color: #00ff00 !important; /* Green text color for dropdown items */
+}
+
+.dropdown-menu li a {
+    color: #00ff00 !important;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.dropdown-menu li a:hover {
+    background-color: transparent; /* Transparent black background */
+    color: #007bff !important; /* Blue text color on hover */
+}
+
+
+/* Banner styles */
+.banner {
+    background-color: #007bff;
+    padding: 50px;
+    text-align: center;
+    color: #00ff00 !important;
+    font-family: 'Courier New', monospace;
+    font-size: 24px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.banner:hover {
+    background-color: #111;
+    transition: background-color 0.3s ease;
+}
+
+/* Container styles */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+/* Overview section styles */
+.overview h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.overview p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Footer styles */
+.footer-container {
+    margin-top: auto;
+}
+
+.footer {
+    background-color: #007bff;
+    color: #00ff00 !important;
+    text-align: center;
+    padding: 10px 0;
+    flex-shrink: 0;
+}

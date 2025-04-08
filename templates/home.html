@@ -1,0 +1,398 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %}Threat Hunter 360</title>
+
+    <!-- External Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Internal Styles -->
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Roboto Mono', monospace;
+            margin: 0;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex-grow: 1;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Sticky Navbar */
+        .main-header {
+            position: sticky;
+            top: 0;
+            background-color: #101e3d;
+            color: #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .main-header ul {
+            display: flex;
+            gap: 15px;
+        }
+
+        .logout a {
+            background-color: #f43f5e;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .main-header a {
+            color: #e2e8f0;
+            font-weight: bold;
+            font-size: 1.1rem;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .main-header a:hover {
+            background-color: #2563eb;
+        }
+
+        /* Banner Section */
+        .banner {
+            background: linear-gradient(to right, #1e293b, #334155);
+            color: #e2e8f0;
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .banner h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            animation: glitch 1.5s infinite linear;
+        }
+
+        .banner p {
+            font-size: 1.2rem;
+            color: #94a3b8;
+        }
+
+        @keyframes glitch {
+            0%, 100% {
+                text-shadow: 2px 0 red, -2px 0 blue;
+            }
+            50% {
+                text-shadow: -2px 0 red, 2px 0 blue;
+            }
+        }
+
+        /* Overview Section */
+        .overview {
+            text-align: center;
+            margin: 30px auto;
+            max-width: 900px;
+        }
+
+        .overview h2 {
+            font-size: 2.5rem;
+            color: #60a5fa;
+            margin-bottom: 10px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .overview p {
+            font-size: 1rem;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Features Section */
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+            flex-grow: 1; /* Ensures the section takes available space */
+        }
+
+        .feature-card {
+            background: linear-gradient(to bottom, #1e293b, #0f172a);
+            color: #e2e8f0;
+            border-radius: 10px;
+            padding: 30px;
+            width: 250px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-card i {
+            font-size: 3rem;
+            color: #60a5fa;
+            margin-bottom: 10px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .feature-card a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background-color: #2563eb;
+            color: #ffffff;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .feature-card a:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* New Banner Below Features Section */
+        .bottom-banner {
+            background: linear-gradient(to left, #1e293b, #3b82f6);
+            color: #e2e8f0;
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .bottom-banner h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            animation: fadeIn 3s ease-out;
+        }
+
+        .bottom-banner p {
+            font-size: 1.2rem;
+            color: #94a3b8;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .modal-content .close {
+            color: #e2e8f0;
+            float: right;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .modal-content .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .modal-content .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: background-color 0.3s;
+        }
+
+        .modal-content .btn-logout {
+            background-color: #f43f5e;
+            color: #ffffff;
+        }
+
+        .modal-content .btn-logout:hover {
+            background-color: #e11d48;
+        }
+
+        .modal-content .btn-cancel {
+            background-color: #2563eb;
+            color: #ffffff;
+        }
+
+        .modal-content .btn-cancel:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* Footer Styles */
+        .footer {
+            text-align: center;
+            padding: 15px;
+            background: #0f172a;
+            color: #94a3b8;
+            width: 100%;
+        }
+
+        .footer p {
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            animation: fadeIn 3s ease-out;
+        }
+    </style>
+
+    {% block cssfilelink %}{% endblock cssfilelink %}
+</head>
+
+<body>
+    <nav class="main-header">
+        <a href="{% url 'home' %}">Threat Hunter 360</a>
+        <ul>
+            <li><a href="{% url 'about' %}">About Us</a></li>
+            <li><a href="{% url 'contact' %}">Contact Us</a></li>
+            <li class="logout"><a href="#">Logout</a></li>
+        </ul>
+    </nav>
+
+    {% block body %}
+    <div class="banner">
+        <h1>Welcome to Threat Hunter 360</h1>
+        <p>Unleashing the Future of Cybersecurity</p>
+    </div>
+
+    <div class="overview">
+        <h2>Overview</h2>
+        <p>
+            Threat Hunter 360 is a powerful cybersecurity tool designed to help analysts and professionals detect, analyze,
+            and mitigate threats efficiently.
+        </p>
+    </div>
+
+    <div class="features">
+        <div class="feature-card">
+            <i class="fas fa-shield-alt"></i>
+            <h3>IP Reputation Check</h3>
+            <p>Analyze and verify the reputation of IP addresses to prevent malicious activities.</p>
+            <a href="{% url 'ips' %}">Check IPs</a>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-link"></i>
+            <h3>URL Reputation Check</h3>
+            <p>Evaluate the safety of URLs and detect potentially harmful sites.</p>
+            <a href="{% url 'urls' %}">Check URLs</a>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-hashtag"></i>
+            <h3>Hash Reputation Check</h3>
+            <p>Assess the reputation of file hashes to safeguard against malware.</p>
+            <a href="{% url 'hashes' %}">Check Hashes</a>
+        </div>
+    </div>
+
+    <div class="bottom-banner">
+        <h2>Empowering Your Cyber Defense</h2>
+        <p>Our mission is to provide the most reliable threat intelligence and protection strategies.</p>
+    </div>
+    {% endblock %}
+
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Do you really want to logout?</p>
+            <div class="btn-container">
+                <a href="{% url 'logout' %}" class="btn btn-logout">Yes</a>
+                <button class="btn btn-cancel">No</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        Threat Hunter 360 &copy; 2024. All Rights Reserved.
+    </footer>
+
+    <script>
+        var modal = document.getElementById("logoutModal");
+        var btnLogout = document.querySelector(".logout a");
+        var spanClose = document.querySelector(".close");
+
+        btnLogout.onclick = function (event) {
+            event.preventDefault();
+            modal.style.display = "block";
+        };
+
+        spanClose.onclick = function () {
+            modal.style.display = "none";
+        };
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+
+        document.querySelector(".btn-cancel").addEventListener("click", function () {
+            modal.style.display = "none";
+        });
+    </script>
+</body>
+
+</html>

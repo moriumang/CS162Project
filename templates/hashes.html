@@ -1,0 +1,250 @@
+{% extends "home.html" %}
+
+{% block title %}Advanced Hash Reputation Check{% endblock title %}
+
+{% block cssfilelink %}
+<style>
+    /* Core Theme */
+    body {
+        font-family: 'Roboto Mono', monospace;
+        background: radial-gradient(circle, #0f172a, #090e1a);
+        color: #e2e8f0;
+        margin: 0;
+        overflow-x: hidden;
+    }
+
+    /* Container */
+    .container {
+        padding: 20px;
+        text-align: center;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Neon Header */
+    .header-glow {
+        margin: 30px auto;
+        text-align: center;
+        color: #38bdf8;
+        animation: neon-pulse 2s infinite alternate;
+    }
+
+    .header-glow h1 {
+        font-size: 3.5rem;
+        text-shadow: 0 0 10px #2563eb, 0 0 20px #1e40af;
+    }
+
+    .header-glow p {
+        font-size: 1.2rem;
+        color: #94a3b8;
+    }
+
+    /* Neon Animation */
+    @keyframes neon-pulse {
+        0% {
+            text-shadow: 0 0 10px #60a5fa, 0 0 20px #2563eb, 0 0 40px #1e40af;
+        }
+        100% {
+            text-shadow: 0 0 20px #60a5fa, 0 0 40px #2563eb, 0 0 80px #1e40af;
+        }
+    }
+
+    /* Info Section */
+    .info-section {
+        margin: 30px auto;
+        padding: 30px;
+        background: linear-gradient(to bottom, #1e293b, #0f172a);
+        border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .info-section h2 {
+        font-size: 2.8rem;
+        color: #60a5fa;
+        margin-bottom: 15px;
+    }
+
+    .info-section p {
+        color: #94a3b8;
+        font-size: 1.2rem;
+        line-height: 1.6;
+    }
+
+    /* Search Section */
+    .search-section {
+        margin: 40px auto;
+    }
+
+    .animated-input {
+        position: relative;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .animated-input input {
+        width: 100%;
+        padding: 15px 60px 15px 20px;
+        border: 2px solid #38bdf8;
+        border-radius: 50px;
+        background: #0f172a;
+        color: #e2e8f0;
+        font-size: 1.2rem;
+        transition: box-shadow 0.3s, border-color 0.3s;
+        box-shadow: 0 0 15px #2563eb;
+    }
+
+    .animated-input input:focus {
+        border-color: #60a5fa;
+        box-shadow: 0 0 30px #60a5fa, 0 0 50px #2563eb;
+        outline: none;
+    }
+
+    .animated-input input::placeholder {
+        color: #94a3b8;
+        opacity: 0.8;
+    }
+
+    .animated-input button {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #60a5fa;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+
+    .animated-input button:hover {
+        color: #38bdf8;
+    }
+
+    /* Features Section */
+    .features-section {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .feature-card {
+        background: linear-gradient(to bottom, #1e293b, #0f172a);
+        border-radius: 20px;
+        padding: 20px;
+        text-align: center;
+        width: 280px;
+        color: #e2e8f0;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .feature-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .feature-card i {
+        font-size: 3rem;
+        color: #60a5fa;
+        margin-bottom: 10px;
+        animation: bounce 2s infinite;
+    }
+
+    .feature-card h3 {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+    }
+
+    .feature-card p {
+        color: #94a3b8;
+        font-size: 1.1rem;
+    }
+
+    /* Bounce Animation */
+    @keyframes bounce {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+</style>
+{% endblock cssfilelink %}
+
+{% block body %}
+<div class="container">
+    <!-- Neon Header -->
+    <div class="header-glow">
+        <h1>Threat Hunter 360</h1>
+        <p>Your Cybersecurity Companion</p>
+    </div>
+
+    <!-- Feature Description Section -->
+    <section class="info-section">
+        <h2>Hash Reputation Check</h2>
+        <p>
+            Enter a hash value to analyze its reputation and detect potential risks.
+            Our intelligence sources ensure precise, actionable insights for every query.
+        </p>
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-section">
+        <form id="hash_form" method="POST" action="{% url 'hash_report' %}" oninput="validateHash()">
+            {% csrf_token %}
+            <div class="animated-input">
+                <input type="text" id="hash_value" name="hash_value" placeholder="Enter Hash Value (e.g., MD5, SHA1, SHA256)" required>
+                <button type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <!-- Additional Feature Highlights -->
+    <section class="features-section">
+        <div class="feature-card">
+            <i class="fas fa-key"></i>
+            <h3>Hash Type Detection</h3>
+            <p>Automatically recognize MD5, SHA1, and SHA256 formats for faster analysis.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Reliable Sources</h3>
+            <p>Utilize data from trusted sources like VirusTotal and AlienVault.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-rocket"></i>
+            <h3>Lightning Fast</h3>
+            <p>Get results within seconds, enabling quicker decision-making for cybersecurity.</p>
+        </div>
+    </section>
+</div>
+
+<script>
+    function validateHash() {
+        const hashInput = document.getElementById('hash_value');
+        const hashValue = hashInput.value.trim();
+
+        const hashPatterns = {
+            md5: /^[a-f0-9]{32}$/,
+            sha1: /^[a-f0-9]{40}$/,
+            sha256: /^[a-f0-9]{64}$/
+        };
+
+        if (
+            !hashPatterns.md5.test(hashValue) &&
+            !hashPatterns.sha1.test(hashValue) &&
+            !hashPatterns.sha256.test(hashValue)
+        ) {
+            alert('Invalid hash format. Please enter a valid MD5, SHA1, or SHA256 hash.');
+            return false;
+        }
+
+        return true;
+    }
+</script>
+{% endblock body %}

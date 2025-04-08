@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup Two-Factor Authentication - Threat Hunter 360</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .setup-container {
+            background-color: #fff;
+            padding: 30px 50px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+        }
+        .setup-container h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .setup-container p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .setup-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+        .setup-container input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .setup-container button {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .setup-container button:hover {
+            background-color: #218838;
+        }
+        .setup-container .cancel-link {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        .setup-container .cancel-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .setup-container .cancel-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="setup-container">
+        <h1>Setup Two-Factor Authentication</h1>
+        <p>Enter the 2FA code from your authenticator app to complete the setup.</p>
+        <form method="POST" action="{% url 'setup_2fa' %}">
+            {% csrf_token %}
+            <label for="2fa-code">2FA Code</label>
+            <input type="text" id="2fa-code" name="2fa_code" required placeholder="Enter your 2FA code">
+            <button type="submit">Enable 2FA</button>
+        </form>
+        <div class="cancel-link">
+            <a href="{% url 'home' %}">Cancel and return to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>
