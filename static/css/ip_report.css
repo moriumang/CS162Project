@@ -1,0 +1,132 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f0f0f0;
+    
+
+}
+
+.container {
+    max-width: 100%;
+    overflow-x: auto;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-image: linear-gradient(144deg, #AF40FF, #5B42F3 50%, #00DDEB); /* Button-63 gradient */
+
+}
+
+.header {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.card {
+    background-color: #f2f2f2;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2, h3 {
+    color: #333;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+h2 {
+    font-size: 20px;
+}
+
+h3 {
+    font-size: 18px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.reference {
+    margin-top: 10px;
+    text-align: center;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center-align items horizontally */
+    margin-top: 20px;
+}
+
+.print-button button,
+.back-button a {
+    padding: 8px 14px; /* Reduced padding */
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px; /* Reduced border radius */
+    cursor: pointer;
+    text-decoration: none; /* Added to remove underline from anchor tag */
+    margin-bottom: 10px; /* Reduced space between buttons */
+    margin-top: 10px; /* Reduced space above the buttons */
+    width: 140px; /* Reduced button width */
+    font-size: 18px; /* Reduced font size */
+    display: flex; /* Added for flex alignment */
+    justify-content: center; /* Center-align content */
+    align-items: center; /* Center-align content */
+    background-image: linear-gradient(144deg, #AF40FF, #5B42F3 50%, #00DDEB); /* Button-63 gradient */
+    box-shadow: rgba(151, 65, 252, 0.2) 0 10px 20px -3px; /* Reduced box shadow */
+    box-sizing: border-box; /* Button-63 box sizing */
+    color: #FFFFFF; /* Button-63 text color */
+    font-family: Phantomsans, sans-serif; /* Button-63 font family */
+    line-height: 1em; /* Button-63 line height */
+    max-width: 100%; /* Button-63 max width */
+    min-width: 100px; /* Reduced minimum width */
+    padding: 8px 12px; /* Reduced padding */
+    user-select: none; /* Button-63 user select */
+    -webkit-user-select: none; /* Button-63 webkit user select */
+    touch-action: manipulation; /* Button-63 touch action */
+    white-space: nowrap; /* Button-63 white space */
+    cursor: pointer; /* Button-63 cursor */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.print-button button:hover,
+.back-button a:hover {
+    background-color: #0056b3; /* Hover background color */
+}
+
+.button-63:active,
+.button-63:hover {
+    outline: 0; /* Remove outline on hover and active state for Button-63 */
+}
