@@ -1,86 +1,166 @@
-from binascii import unhexlify
-from os import urandom
-import random
-import string
+# Copyright (C) Dnspython Contributors, see LICENSE for text of ISC license
 
-from django.core.exceptions import ValidationError
+# Copyright (C) 2006, 2007, 2009-2011 Nominum, Inc.
+#
+# Permission to use, copy, modify, and distribute this software and its
+# documentation for any purpose with or without fee is hereby granted,
+# provided that the above copyright notice and this permission notice
+# appear in all copies.
+#
+# THE SOFTWARE IS PROVIDED "AS IS" AND NOMINUM DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL NOMINUM BE LIABLE FOR
+# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
+# OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+import struct
 
-def hex_validator(length=0):
-    """
-    Returns a function to be used as a model validator for a hex-encoded
-    CharField. This is useful for secret keys of all kinds::
+import dns.exception
+import dns.name
+import dns.ipv4
+import dns.ipv6
 
-        def key_validator(value):
-            return hex_validator(20)(value)
+class Gateway:
+    """A helper class for the IPSECKEY gateway and AMTRELAY relay fields"""
+    name = ""
 
-        key = models.CharField(max_length=40, validators=[key_validator], help_text='A hex-encoded 20-byte secret key')
+    def __init__(self, type, gateway=None):
+        self.type = type
+        self.gateway = gateway
 
-    :param int length: If greater than 0, validation will fail unless the
-        decoded value is exactly this number of bytes.
+    def _invalid_type(self):
+        return f"invalid {self.name} type: {self.type}"
 
-    :rtype: function
+    def check(self):
+        if self.type == 0:
+            if self.gateway not in (".", None):
+                raise SyntaxError(f"invalid {self.name} for type 0")
+            self.gateway = None
+        elif self.type == 1:
+            # check that it's OK
+            dns.ipv4.inet_aton(self.gateway)
+        elif self.type == 2:
+            # check that it's OK
+            dns.ipv6.inet_aton(self.gateway)
+        elif self.type == 3:
+            if not isinstance(self.gateway, dns.name.Name):
+                raise SyntaxError(f"invalid {self.name}; not a name")
+        else:
+            raise SyntaxError(self._invalid_type())
 
-    >>> hex_validator()('0123456789abcdef')
-    >>> hex_validator(8)(b'0123456789abcdef')
-    >>> hex_validator()('phlebotinum')          # doctest: +IGNORE_EXCEPTION_DETAIL
-    Traceback (most recent call last):
-        ...
-    ValidationError: ['phlebotinum is not valid hex-encoded data.']
-    >>> hex_validator(9)('0123456789abcdef')    # doctest: +IGNORE_EXCEPTION_DETAIL
-    Traceback (most recent call last):
-        ...
-    ValidationError: ['0123456789abcdef does not represent exactly 9 bytes.']
-    """
+    def to_text(self, origin=None, relativize=True):
+        if self.type == 0:
+            return "."
+        elif self.type in (1, 2):
+            return self.gateway
+        elif self.type == 3:
+            return str(self.gateway.choose_relativity(origin, relativize))
+        else:
+            raise ValueError(self._invalid_type())
 
-    def _validator(value):
-        try:
-            if isinstance(value, str):
-                value = value.encode()
+    def from_text(self, tok, origin=None, relativize=True, relativize_to=None):
+        if self.type in (0, 1, 2):
+            return tok.get_string()
+        elif self.type == 3:
+            return tok.get_name(origin, relativize, relativize_to)
+        else:
+            raise dns.exception.SyntaxError(self._invalid_type())
 
-            unhexlify(value)
-        except Exception:
-            raise ValidationError('{0} is not valid hex-encoded data.'.format(value))
+    def to_wire(self, file, compress=None, origin=None, canonicalize=False):
+        if self.type == 0:
+            pass
+        elif self.type == 1:
+            file.write(dns.ipv4.inet_aton(self.gateway))
+        elif self.type == 2:
+            file.write(dns.ipv6.inet_aton(self.gateway))
+        elif self.type == 3:
+            self.gateway.to_wire(file, None, origin, False)
+        else:
+            raise ValueError(self._invalid_type())
 
-        if (length > 0) and (len(value) != length * 2):
-            raise ValidationError(
-                '{0} does not represent exactly {1} bytes.'.format(value, length)
-            )
+    def from_wire_parser(self, parser, origin=None):
+        if self.type == 0:
+            return None
+        elif self.type == 1:
+            return dns.ipv4.inet_ntoa(parser.get_bytes(4))
+        elif self.type == 2:
+            return dns.ipv6.inet_ntoa(parser.get_bytes(16))
+        elif self.type == 3:
+            return parser.get_name(origin)
+        else:
+            raise dns.exception.FormError(self._invalid_type())
 
-    return _validator
+class Bitmap:
+    """A helper class for the NSEC/NSEC3/CSYNC type bitmaps"""
+    type_name = ""
 
+    def __init__(self, windows=None):
+        self.windows = windows
 
-def random_hex(length=20):
-    """
-    Returns a string of random bytes encoded as hex.
+    def to_text(self):
+        text = ""
+        for (window, bitmap) in self.windows:
+            bits = []
+            for (i, byte) in enumerate(bitmap):
+                for j in range(0, 8):
+                    if byte & (0x80 >> j):
+                        rdtype = window * 256 + i * 8 + j
+                        bits.append(dns.rdatatype.to_text(rdtype))
+            text += (' ' + ' '.join(bits))
+        return text
 
-    This uses :func:`os.urandom`, so it should be suitable for generating
-    cryptographic keys.
+    def from_text(self, tok):
+        rdtypes = []
+        while True:
+            token = tok.get().unescape()
+            if token.is_eol_or_eof():
+                break
+            rdtype = dns.rdatatype.from_text(token.value)
+            if rdtype == 0:
+                raise dns.exception.SyntaxError(f"{self.type_name} with bit 0")
+            rdtypes.append(rdtype)
+        rdtypes.sort()
+        window = 0
+        octets = 0
+        prior_rdtype = 0
+        bitmap = bytearray(b'\0' * 32)
+        windows = []
+        for rdtype in rdtypes:
+            if rdtype == prior_rdtype:
+                continue
+            prior_rdtype = rdtype
+            new_window = rdtype // 256
+            if new_window != window:
+                if octets != 0:
+                    windows.append((window, bitmap[0:octets]))
+                bitmap = bytearray(b'\0' * 32)
+                window = new_window
+            offset = rdtype % 256
+            byte = offset // 8
+            bit = offset % 8
+            octets = byte + 1
+            bitmap[byte] = bitmap[byte] | (0x80 >> bit)
+        if octets != 0:
+            windows.append((window, bitmap[0:octets]))
+        return windows
 
-    :param int length: The number of (decoded) bytes to return.
+    def to_wire(self, file):
+        for (window, bitmap) in self.windows:
+            file.write(struct.pack('!BB', window, len(bitmap)))
+            file.write(bitmap)
 
-    :returns: A string of hex digits.
-    :rtype: str
-
-    """
-    return urandom(length).hex()
-
-
-def random_number_token(length=6):
-    """
-    Returns a string of random digits encoded as string.
-
-    :param int length: The number of digits to return.
-
-    :returns: A string of decimal digits.
-    :rtype: str
-
-    """
-    rand = random.SystemRandom()
-
-    if hasattr(rand, 'choices'):
-        digits = rand.choices(string.digits, k=length)
-    else:
-        digits = (rand.choice(string.digits) for i in range(length))
-
-    return ''.join(digits)
+    def from_wire_parser(self, parser):
+        windows = []
+        last_window = -1
+        while parser.remaining() > 0:
+            window = parser.get_uint8()
+            if window <= last_window:
+                raise dns.exception.FormError(f"bad {self.type_name} bitmap")
+            bitmap = parser.get_counted_bytes()
+            if len(bitmap) == 0 or len(bitmap) > 32:
+                raise dns.exception.FormError(f"bad {self.type_name} octets")
+            windows.append((window, bitmap))
+            last_window = window
+        return windows

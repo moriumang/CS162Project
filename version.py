@@ -1,6 +1,6 @@
 # Copyright (C) Dnspython Contributors, see LICENSE for text of ISC license
 
-# Copyright (C) 2003-2007, 2009, 2011 Nominum, Inc.
+# Copyright (C) 2003-2017 Nominum, Inc.
 #
 # Permission to use, copy, modify, and distribute this software and its
 # documentation for any purpose with or without fee is hereby granted,
@@ -15,47 +15,32 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
 # OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-"""dnspython DNS toolkit"""
+"""dnspython release version information."""
 
-__all__ = [
-    'asyncbackend',
-    'asyncquery',
-    'asyncresolver',
-    'dnssec',
-    'e164',
-    'edns',
-    'entropy',
-    'exception',
-    'flags',
-    'inet',
-    'ipv4',
-    'ipv6',
-    'message',
-    'name',
-    'namedict',
-    'node',
-    'opcode',
-    'query',
-    'rcode',
-    'rdata',
-    'rdataclass',
-    'rdataset',
-    'rdatatype',
-    'renderer',
-    'resolver',
-    'reversename',
-    'rrset',
-    'serial',
-    'set',
-    'tokenizer',
-    'tsig',
-    'tsigkeyring',
-    'ttl',
-    'rdtypes',
-    'update',
-    'version',
-    'wire',
-    'zone',
-]
+#: MAJOR
+MAJOR = 2
+#: MINOR
+MINOR = 0
+#: MICRO
+MICRO = 0
+#: RELEASELEVEL
+RELEASELEVEL = 0x0f
+#: SERIAL
+SERIAL = 0
 
-from dns.version import version as __version__  # noqa
+if RELEASELEVEL == 0x0f:  # pragma: no cover
+    #: version
+    version = '%d.%d.%d' % (MAJOR, MINOR, MICRO)
+elif RELEASELEVEL == 0x00:  # pragma: no cover
+    version = '%d.%d.%ddev%d' % \
+              (MAJOR, MINOR, MICRO, SERIAL)
+elif RELEASELEVEL == 0x0c:  # pragma: no cover
+    version = '%d.%d.%drc%d' % \
+              (MAJOR, MINOR, MICRO, SERIAL)
+else:  # pragma: no cover
+    version = '%d.%d.%d%x%d' % \
+              (MAJOR, MINOR, MICRO, RELEASELEVEL, SERIAL)
+
+#: hexversion
+hexversion = MAJOR << 24 | MINOR << 16 | MICRO << 8 | RELEASELEVEL << 4 | \
+    SERIAL

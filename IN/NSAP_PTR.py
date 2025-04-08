@@ -1,6 +1,6 @@
 # Copyright (C) Dnspython Contributors, see LICENSE for text of ISC license
 
-# Copyright (C) 2003-2007, 2009, 2011 Nominum, Inc.
+# Copyright (C) 2003-2007, 2009-2011 Nominum, Inc.
 #
 # Permission to use, copy, modify, and distribute this software and its
 # documentation for any purpose with or without fee is hereby granted,
@@ -15,47 +15,9 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
 # OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-"""dnspython DNS toolkit"""
+import dns.rdtypes.nsbase
 
-__all__ = [
-    'asyncbackend',
-    'asyncquery',
-    'asyncresolver',
-    'dnssec',
-    'e164',
-    'edns',
-    'entropy',
-    'exception',
-    'flags',
-    'inet',
-    'ipv4',
-    'ipv6',
-    'message',
-    'name',
-    'namedict',
-    'node',
-    'opcode',
-    'query',
-    'rcode',
-    'rdata',
-    'rdataclass',
-    'rdataset',
-    'rdatatype',
-    'renderer',
-    'resolver',
-    'reversename',
-    'rrset',
-    'serial',
-    'set',
-    'tokenizer',
-    'tsig',
-    'tsigkeyring',
-    'ttl',
-    'rdtypes',
-    'update',
-    'version',
-    'wire',
-    'zone',
-]
 
-from dns.version import version as __version__  # noqa
+class NSAP_PTR(dns.rdtypes.nsbase.UncompressedNS):
+
+    """NSAP-PTR record"""
